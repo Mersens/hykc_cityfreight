@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">货运快车</string>
+    <string name="reg_code">短信验证码</string>
+    <string name="get_code">获取验证码</string>
+    <string name="input_pass">输入密码</string>
+    <string name="input_oldpass">输入旧密码</string>
+    <string name="input_newpass">输入新密码(6位以上)</string>
+    <string name="tv_update_ok">确定</string>
+    <string name="set_pass">输入密码(6位以上)</string>
+    <string name="tv_about">\u3000\u3000我们专注为货车司机提供货源，减少货车空载，提升货车司机收益，主要提供身份证认证、位置定位、路线定制、派单提醒、货运签单、保证金支付等。</string>
+    <string name="reg_xingmingsubject">请输入手机号</string>
+    <string name="xhz_tips">卸货照请确保车牌号清晰可见！</string>
+    <string name="hdz_tips">回单照请确保文字清晰可见！</string>
+    <string name="voice_up_tips">手指上滑,取消发送</string>
+    <string name="voice_cancel_tips">松开手指，取消发送</string>
+    <string name="voice_seconds_tips">还可以说%1$s秒</string>
+    <string name="voice_short_tips">录音时间太短</string>
+    <string name="longclick_speak">长按说话</string>
+    <string name="picture">照片</string>
+    <string name="camera">拍摄</string>
+    <string name="location">位置</string>
+    <string name="noti_text_expression">[Expression]</string>
+    <string name="dlyszbh">道路运输经营许可证号：郑410105005586</string>
+    <string name="dxywjyxkz">增值电信业务经营许可证号：豫B2-20140099</string>
+    <string name="djzsbh">信息系统安全等级编号：41010039013-19001</string>
+    <string name="login_company_tips">本企业是交通运输业深化增值税改革典型跟踪企业，货运快车平台与《国家税务总局河南省税务局货运业务网络服务平台》已实现全线对接。</string>
+</resources>

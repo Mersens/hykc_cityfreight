@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/base_color_text_white"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/actionbar_color"
+        >
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/base_color_text_white"
+            android:text="我的咨询"
+            android:layout_centerInParent="true"
+            />
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/icon_action_back"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/base_color_text_white"
+            android:text="添加"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            />
+    </RelativeLayout>
+   <FrameLayout
+       android:layout_height="0dp"
+       android:layout_weight="1"
+       android:layout_width="match_parent"
+       >
+       <android.support.v4.widget.SwipeRefreshLayout
+           android:id="@+id/swipeRefreshLayout"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           >
+           <android.support.v7.widget.RecyclerView
+               android:id="@+id/recyclerView"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               />
+       </android.support.v4.widget.SwipeRefreshLayout>
+       <RelativeLayout
+           android:id="@+id/layout_nomsg"
+           android:layout_height="match_parent"
+           android:layout_width="match_parent"
+           android:background="@color/base_color_text_white"
+           android:visibility="gone"
+           >
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerInParent="true"
+               android:textSize="@dimen/text_size_normal"
+               android:textColor="@color/actionbar_color"
+               android:text="暂无数据！"
+               />
+
+
+       </RelativeLayout>
+
+
+
+   </FrameLayout>
+</LinearLayout>

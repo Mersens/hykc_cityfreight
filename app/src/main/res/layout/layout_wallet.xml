@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/base_color_text_white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/actionbar_color">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的钱包"
+            android:textColor="@color/base_color_text_white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/icon_action_back" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="top|center"
+                    android:src="@mipmap/img_wallet_top" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/menu_bg"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical"
+                    >
+                    <RelativeLayout
+                        android:layout_height="150dp"
+                        android:layout_width="match_parent"
+                        >
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_centerInParent="true"
+                            android:gravity="center_horizontal"
+                            >
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="总资产"
+                                android:textSize="14sp"
+                                android:layout_marginBottom="8dp"
+                                android:textColor="@color/color_text_gray"
+                                />
+                            <TextView
+                                android:id="@+id/tv_money"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                tools:text="1234.12"
+                                android:textSize="22sp"
+                                android:textColor="@color/text_color_black"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_tips"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                tools:text="最近一次进账86元"
+                                android:layout_marginTop="12dp"
+                                android:textSize="12sp"
+                                android:textColor="@color/color_text_gray"
+                                />
+
+                        </LinearLayout>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        >
+                        <RelativeLayout
+                            android:layout_height="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            >
+                            <TextView
+                                android:id="@+id/tv_bankcard"
+                                android:layout_height="34dp"
+                                android:layout_width="match_parent"
+                                android:text="银行卡"
+                                android:textSize="14sp"
+                                android:textColor="@color/actionbar_color"
+                                android:gravity="center"
+                                android:layout_marginRight="8dp"
+                                android:background="@drawable/btn_yhk_bg"
+                                android:layout_centerInParent="true"
+                                />
+                        </RelativeLayout>>
+                        <RelativeLayout
+                            android:layout_height="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            >
+                            <TextView
+                                android:id="@+id/tv_tx"
+                                android:layout_height="34dp"
+                                android:layout_width="match_parent"
+                                android:text="提现"
+                                android:textSize="14sp"
+                                android:textColor="@color/base_color_text_white"
+                                android:gravity="center"
+                                android:background="@drawable/btn_cz_bg"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_centerInParent="true"
+                                />
+                        </RelativeLayout>>
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/text_color_black"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="16dp"
+                    android:text="近期交易明细"
+                    android:layout_gravity="left|bottom"
+                    />
+            </FrameLayout>
+
+
+            <com.hykc.cityfreight.view.ScrollListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView"
+                android:scrollbars="none"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

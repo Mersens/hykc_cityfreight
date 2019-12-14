@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:id="@+id/rlaccount"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="27dip"
+            android:layout_marginRight="27dip"
+            android:layout_height="48dip">
+
+            <ImageView
+                android:id="@+id/ivuser"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="7dp"
+                android:layout_height="26dp"
+                android:layout_width="20dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_login_sj" />
+
+            <EditText
+                android:layout_toRightOf="@+id/ivuser"
+                android:id="@+id/editPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
+                android:textSize="14sp"
+                android:maxLength="11"
+                android:inputType="phone"
+                android:background="@null"
+                android:singleLine="true"
+                android:digits="0123456789"
+                android:text=""
+                android:hint="手机号"
+                android:textColor="@color/base_color_text_white"
+                android:textColorHint="@color/base_color_text_white" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/base_color_text_white"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_height="1dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:layout_marginLeft="27dip"
+            android:layout_marginRight="27dip"
+            android:layout_marginTop="8dp"
+            >
+
+            <ImageView
+                android:id="@+id/ivinfo"
+                android:layout_width="20dp"
+                android:layout_height="26dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="7dp"
+                android:src="@mipmap/icon_login_yzm" />
+
+            <EditText
+                android:id="@+id/edCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
+                android:layout_toRightOf="@+id/ivinfo"
+                android:background="@null"
+                android:hint="@string/reg_code"
+                android:maxLength="11"
+                android:shadowDx="0.0"
+                android:shadowDy="1.0"
+                android:shadowRadius="1.0"
+                android:singleLine="true"
+                android:inputType="number"
+                android:textColor="@color/base_color_text_white"
+                android:textColorHint="@color/base_color_text_white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_getCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="7dp"
+                android:text="@string/get_code"
+                android:textColor="@color/actionbar_color"
+                android:background="@drawable/tv_getcode_bg"
+                android:paddingTop="4dp"
+                android:gravity="center"
+                android:paddingBottom="4dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/base_color_text_white"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_height="1dp" />
+        <RelativeLayout
+            android:id="@+id/layout_xy"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="27dp">
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/login_checkbox_selector"
+                android:button="@null"
+                android:checked="true" />
+
+            <TextView
+                android:id="@+id/tv_xy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/checkBox"
+                android:lineSpacingExtra="2dp"
+                android:maxLines="2"
+                android:text="我已阅读并同意《货运快车用户协议》"
+                android:textColor="@color/base_color_text_white"
+                android:textSize="12sp"
+                />
+
+        </RelativeLayout>
+        <Button
+            android:id="@+id/btnlogin"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginLeft="30dp"
+            android:text="登录"
+            android:textColor="@color/actionbar_color"
+            android:layout_marginRight="30dp"
+            android:textSize="16sp"
+            android:background="@drawable/btn_login_bg" />
+
+    </LinearLayout>
+
+</LinearLayout>

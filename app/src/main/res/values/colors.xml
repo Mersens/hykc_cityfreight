@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+   <!-- <color name="actionbar_color"> #298cf5</color>-->
+
+    <color name="actionbar_color">#2182d1</color>
+    <color name="login_actionbar_color">#2368ae</color>
+    <color name="base_color_text_white">#FFFFFF</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="color_line_text">#e1e1e2</color>
+    <color name="color_bg">#eeeeee</color>
+    <color name="color_text_gray">#b9b9b9</color>
+    <color name="color_text_select">#187fdc</color>
+    <color name="text_color_black">#0f2536</color>
+    <color name="text_color">#888c97</color>
+
+</resources>

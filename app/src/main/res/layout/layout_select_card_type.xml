@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
+    >
+    <LinearLayout
+        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/dialog_bg"
+        android:layout_margin="16dp"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择账户类型"
+                android:textSize="14sp"
+                android:textColor="@color/text_color"
+                android:layout_centerInParent="true"
+                />
+            <ImageView
+                android:layout_height="24dp"
+                android:layout_width="24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:id="@+id/img_close"
+                android:src="@mipmap/icon_gray_close"
+                />
+
+
+        </RelativeLayout>
+        <View
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="@color/color_line_text"
+
+            />
+
+        <RelativeLayout
+            android:id="@+id/layout_zfb"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            >
+            <ImageView
+                android:id="@+id/img_zfb"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@mipmap/icon_zfb"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                android:text="支付宝"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/img_zfb"
+                />
+            <ImageView
+                android:id="@+id/img_ok1"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@mipmap/img_ok"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                />
+
+
+
+
+        </RelativeLayout>
+        <View
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="@color/color_line_text"
+
+            />
+        <RelativeLayout
+            android:id="@+id/layout_wx"
+
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            >
+            <ImageView
+                android:id="@+id/img_wx"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@mipmap/icon_wx"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                android:text="微信"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/img_wx"
+                />
+            <ImageView
+                android:id="@+id/img_ok2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@mipmap/img_ok"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"
+                />
+
+
+
+
+        </RelativeLayout>
+        <View
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="@color/color_line_text"
+
+            />
+
+        <RelativeLayout
+            android:id="@+id/layout_yhk"
+
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            >
+            <ImageView
+                android:id="@+id/img_yhk"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@mipmap/icon_yhk"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                android:text="银行卡"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/img_yhk"
+                />
+            <ImageView
+                android:id="@+id/img_ok3"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@mipmap/img_ok"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"
+                />
+
+        </RelativeLayout>
+        <View
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="@color/color_line_text"
+
+            />
+        <Button
+            android:id="@+id/btn"
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:text="确定"
+            android:textColor="@color/base_color_text_white"
+            android:layout_marginRight="30dp"
+            android:textSize="16sp"
+            android:background="@drawable/btn_select_bg"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+
+           />
+
+
+    </LinearLayout>
+
+</LinearLayout>

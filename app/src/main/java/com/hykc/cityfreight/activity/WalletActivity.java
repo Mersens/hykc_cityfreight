@@ -3,6 +3,9 @@ package com.hykc.cityfreight.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,17 +14,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hykc.cityfreight.R;
-import com.hykc.cityfreight.adapter.BalanceDetailAdapter;
+import com.hykc.cityfreight.adapter.OrderPagerAdapter;
 import com.hykc.cityfreight.entity.UDriver;
-import com.hykc.cityfreight.entity.ZDriver;
+import com.hykc.cityfreight.fragment.YTXInfoFragment;
+import com.hykc.cityfreight.fragment.WTXInfoFragment;
 import com.hykc.cityfreight.utils.RequestManager;
 import com.hykc.cityfreight.utils.ResultObserver;
 import com.hykc.cityfreight.utils.SharePreferenceUtil;
 import com.hykc.cityfreight.view.ExitDialogFragment;
-import com.hykc.cityfreight.view.ScrollListView;
+import com.hykc.cityfreight.view.NoScrollViewPager;
 import com.google.gson.Gson;
+import com.hykc.cityfreight.view.ViewPagerForScrollView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,13 +38,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class WalletActivity extends BaseActivity {
     private ImageView mImgBack;
-    private ScrollListView listView;
     private TextView mTextMoney;
     private TextView mTextTips;
     private TextView mTextBankCard;
     private TextView mTextTx;
     private int statu=0;
     private String userid;
+    private TabLayout mTabLayout;
+    private ViewPagerForScrollView mViewPager;
+    private List<Fragment> fragmentList;
+    private List<String> tabTitles;
+    private OrderPagerAdapter mAdapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,74 +72,10 @@ public class WalletActivity extends BaseActivity {
     private void initData() {
         userid= SharePreferenceUtil.getInstance(this).getUserId();
         getMoneyInfo(userid);
-        getCashWithdrawal();
+
 
     }
 
-    private void getCashWithdrawal(){
-        Map<String,String> map=new HashMap<>();
-        String userInfo=SharePreferenceUtil.getInstance(this).getUserinfo();
-        if(!TextUtils.isEmpty(userInfo)){
-            Gson gson=new Gson();
-            UDriver uDriver= gson.fromJson(userInfo,UDriver.class);
-            long id=uDriver.getId();
-            map.put("driverId",id+"");
-        }
-        RequestManager.getInstance()
-                .mServiceStore
-                .selectCashWithdrawal(map)
-                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ResultObserver(new RequestManager.onRequestCallBack() {
-                    @Override
-                    public void onSuccess(String msg) {
-                        Log.e("applyCashWithdrawal", msg);
-                        boolean isSuccess = false;
-                        try {
-                            JSONObject jsonObject = new JSONObject(msg);
-                            isSuccess = jsonObject.getBoolean("success");
-                            if (isSuccess) {
-                                String str=jsonObject.getString("entity");
-                                if(!"null".equals(str)){
-                                    List<ZDriver> list=new ArrayList<>();
-                                    Gson gson=new Gson();
-                                    JSONArray array=new JSONArray(str);
-                                    for (int i = 0; i <array.length() ; i++) {
-                                        String string=array.getString(i);
-                                        ZDriver zDriver=gson.fromJson(string,ZDriver.class);
-                                        list.add(zDriver);
-                                    }
-                                    if(list.size()==0){
-                                        return;
-                                    }
-                                    List<ZDriver> mList=new ArrayList<>();
-                                    if(list.size()>5){
-                                        for(int i=0;i<5;i++){
-                                            mList.add(list.get(i));
-                                        }
-                                    }else {
-                                        mList.addAll(list);
-                                    }
-                                    BalanceDetailAdapter adapter = new BalanceDetailAdapter(
-                                            WalletActivity.this, mList);
-                                    listView.setAdapter(adapter);
-                                }else {
-
-                                }
-                            }else {
-                                Toast.makeText(WalletActivity.this, "查询失败",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void onError(String msg) {
-                        Log.e("checkTokenTimeout", msg);
-                    }
-                }));
-    }
 
     private void initEvent() {
         mImgBack.setOnClickListener(new View.OnClickListener() {
@@ -212,11 +156,25 @@ public class WalletActivity extends BaseActivity {
 
     private void initView() {
         mImgBack=findViewById(R.id.img_back);
-        listView=findViewById(R.id.listView);
         mTextMoney=findViewById(R.id.tv_money);
         mTextTips=findViewById(R.id.tv_tips);
         mTextBankCard=findViewById(R.id.tv_bankcard);
         mTextTx=findViewById(R.id.tv_tx);
+        mTabLayout = findViewById(R.id.tabLayout);
+        mViewPager = findViewById(R.id.viewPager);
+        mViewPager.setOffscreenPageLimit(1);
+        fragmentList = new ArrayList<Fragment>();
+        fragmentList.add(YTXInfoFragment.newInstance());
+        fragmentList.add(WTXInfoFragment.newInstance());
+        tabTitles = new ArrayList<String>();
+        tabTitles.add("已提现");
+        tabTitles.add("未提现");
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mTabLayout.addTab(mTabLayout.newTab().setText(tabTitles.get(0)));
+        mTabLayout.addTab(mTabLayout.newTab().setText(tabTitles.get(1)));
+        mAdapter = new OrderPagerAdapter(getSupportFragmentManager(), fragmentList, tabTitles);
+        mViewPager.setAdapter(mAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
         userid= SharePreferenceUtil.getInstance(this).getUserId();
         if(TextUtils.isEmpty(userid)){
             Toast.makeText(this, "用户id为空", Toast.LENGTH_SHORT).show();

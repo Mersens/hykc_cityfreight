@@ -25,6 +25,9 @@ import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
 import com.allenliu.versionchecklib.v2.builder.UIData;
 import com.allenliu.versionchecklib.v2.callback.ForceUpdateListener;
 import com.allenliu.versionchecklib.v2.callback.RequestVersionListener;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationListener;
 import com.hykc.cityfreight.R;
 import com.hykc.cityfreight.adapter.MenuPageAdapter;
 import com.hykc.cityfreight.app.AlctConstants;
@@ -97,6 +100,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public String lat;
     public String lon;
 
+
+
+
+
     public void setLocation(String lat, String lon) {
         this.lat = lat;
         this.lon = lon;
@@ -109,8 +116,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-
-
     }
 
     @Override
@@ -133,12 +138,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         LocationOpenApiHelper.newInstance().init(context, new LocationOpenApiHelper.OnAipResultListener() {
             @Override
             public void onSuccess() {
-                Log.e("initOpenApi","initOpenApi onSuccess");
+                Log.e("initOpenApi", "initOpenApi onSuccess");
             }
 
             @Override
             public void onFailure(String errorCode, String errorMsg) {
-                Log.e("initOpenApi","initOpenApi onFailure="+errorCode+";"+errorMsg);
+                Log.e("initOpenApi", "initOpenApi onFailure=" + errorCode + ";" + errorMsg);
             }
         });
     }
@@ -469,14 +474,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             UDriver uDriver = gson.fromJson(userInfo, UDriver.class);
             int statu = uDriver.getStatus();
             if (statu == 1) {
-                Log.e("ServiceUtils",ServiceUtils.isServiceWork(getApplicationContext(),"com.hykc.cityfreight.service.MQTTService")+"");
-                if(!ServiceUtils.isServiceWork(getApplicationContext(),"com.hykc.cityfreight.service.MQTTService")){
+                Log.e("ServiceUtils", ServiceUtils.isServiceWork(getApplicationContext(), "com.hykc.cityfreight.service.MQTTService") + "");
+                if (!ServiceUtils.isServiceWork(getApplicationContext(), "com.hykc.cityfreight.service.MQTTService")) {
                     Intent mqttService = new Intent(getApplicationContext(), MQTTService.class);
                     startService(mqttService);
                 }
-                if(!ServiceUtils.isServiceWork(getApplicationContext(),"com.hykc.cityfreight.service.ConnectService")) {
-                    Intent intent=new Intent(getApplicationContext(), ConnectService.class);
-                    intent.putExtra("id",uDriver.getMobile());
+                if (!ServiceUtils.isServiceWork(getApplicationContext(), "com.hykc.cityfreight.service.ConnectService")) {
+                    Intent intent = new Intent(getApplicationContext(), ConnectService.class);
+                    intent.putExtra("id", uDriver.getMobile());
                     startService(intent);
                 }
 

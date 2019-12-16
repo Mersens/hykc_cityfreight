@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+
 import com.hykc.cityfreight.R;
 import com.hykc.cityfreight.entity.ZDriver;
 
@@ -16,12 +17,12 @@ import java.util.List;
  * Created by Administrator on 2018/3/27.
  */
 
-public class BalanceDetailAdapter extends BaseAdapter {
+public class WTXBalanceDetailAdapter extends BaseAdapter {
     private Context mContext;
     private List<ZDriver> mList;
     private LayoutInflater mInflater;
 
-    public BalanceDetailAdapter(Context context, List<ZDriver> list) {
+    public WTXBalanceDetailAdapter(Context context, List<ZDriver> list) {
         this.mContext = context;
         this.mList = list;
         mInflater = LayoutInflater.from(mContext);
@@ -58,16 +59,7 @@ public class BalanceDetailAdapter extends BaseAdapter {
             holder=(ViewHolder)view.getTag();
         }
         ZDriver entity=mList.get(i);
-        int type=entity.getType();
-        if(type==1){
-            holder.mTextType.setText("运费收款");
-        }else if(type==2){
-            holder.mTextType.setText("充值");
-        }else if(type==3){
-            holder.mTextType.setText("提现");
-        }else {
-            holder.mTextType.setText("其他");
-        }
+        holder.mTextType.setText(entity.getTarget());
         holder.mTextTime.setText(entity.getCreateTime());
         holder.mTextType_Value.setText(entity.getPrice()+" 元");
         return view;

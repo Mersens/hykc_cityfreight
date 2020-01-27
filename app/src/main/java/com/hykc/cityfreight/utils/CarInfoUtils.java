@@ -40,9 +40,10 @@ public class CarInfoUtils {
         carflMap.put("H06", "集装箱车");
         carflMap.put("H07", "自卸货车");
         carflMap.put("H08", "特殊结构货车");
-        carflMap.put("Z00", "专项作业车");
+
+/*        carflMap.put("Z00", "专项作业车");
         carflMap.put("X91", "车辆运输车");
-        carflMap.put("X92", "车辆运输车(单排)");
+        carflMap.put("X92", "车辆运输车(单排)");*/
 
 /*        carflMap.put("Q11", "重型半挂牵引车");
         carflMap.put("G01", "普通挂车");

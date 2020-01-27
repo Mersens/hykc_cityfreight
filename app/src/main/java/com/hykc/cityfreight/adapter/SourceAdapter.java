@@ -31,7 +31,7 @@ public class SourceAdapter extends RecyclerView.Adapter<SourceAdapter.ViewHolder
 
     public void setDatas(List<UWaybill> list){
         this.list=list;
-        notifyItemRangeChanged(0,this.list.size());
+        notifyDataSetChanged();
     }
 
 

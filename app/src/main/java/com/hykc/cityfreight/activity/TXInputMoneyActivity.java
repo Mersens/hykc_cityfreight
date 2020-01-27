@@ -27,6 +27,7 @@ import com.hykc.cityfreight.utils.ResultObserver;
 import com.hykc.cityfreight.utils.RxBus;
 import com.hykc.cityfreight.utils.SharePreferenceUtil;
 import com.hykc.cityfreight.view.ExitDialogFragment;
+import com.hykc.cityfreight.view.InputCodeDialog;
 import com.hykc.cityfreight.view.InputPsdDialog;
 import com.hykc.cityfreight.view.LoadingDialogFragment;
 import com.hykc.cityfreight.view.TXMoneyDialog;
@@ -173,7 +174,8 @@ public class TXInputMoneyActivity extends BaseActivity {
         mBtnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dotx();
+               dotx();
+
             }
         });
     }
@@ -298,13 +300,33 @@ public class TXInputMoneyActivity extends BaseActivity {
                 uploadInfo(strMoney, psd,account,type,name);
             }else {
                 //提示重新签订打款协议
-                String tips="选择提现的账户与接单时签署的银行卡账户不一致\n"+"需要进行重新签约！";
-                showSignAgreAgain(tips,strMoney, psd,account,type,name);
+              /*  String tips="选择提现的账户与接单时签署的银行卡账户不一致\n"+"需要进行重新签约！";
+                showSignAgreAgain(tips,strMoney, psd,account,type,name);*/
+                showCodeView(strMoney, psd,account,type,name);
             }
         }else {
             //之前老数据，忽略执行下一步提现
             uploadInfo(strMoney, psd,account,type,name);
         }
+
+    }
+
+    private void showCodeView(final String strMoney, final String psd,
+                              final String account,final String type,final String name){
+        final InputCodeDialog inputCodeDialog=InputCodeDialog.newInstance(strMoney);
+        inputCodeDialog.showF(getSupportFragmentManager(),"InputCodeView");
+        inputCodeDialog.setOnDialogClickListener(new ExitDialogFragment.OnDialogClickListener() {
+            @Override
+            public void onClickCancel() {
+                inputCodeDialog.dismissAllowingStateLoss();
+            }
+            @Override
+            public void onClickOk() {
+                inputCodeDialog.dismissAllowingStateLoss();
+                String tips="选择提现的账户与接单时签署的银行卡账户不一致\n"+"需要进行重新签约！";
+                showSignAgreAgain(tips,strMoney, psd,account,type,name);
+            }
+        });
 
     }
 

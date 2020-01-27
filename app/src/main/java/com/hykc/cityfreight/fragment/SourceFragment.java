@@ -24,6 +24,7 @@ import com.hykc.cityfreight.utils.RequestManager;
 import com.hykc.cityfreight.utils.ResultObserver;
 import com.hykc.cityfreight.utils.RxBus;
 import com.hykc.cityfreight.utils.SharePreferenceUtil;
+import com.hykc.cityfreight.view.ExitDialogFragment;
 import com.hykc.cityfreight.view.LoadingDialogFragment;
 import com.hykc.cityfreight.view.SelectCarDialog;
 import com.google.gson.Gson;
@@ -53,6 +54,7 @@ public class SourceFragment extends BaseFragment implements View.OnClickListener
     private RecyclerView recyclerView;
     private static final int pageSize = 10;
     private int pageCurrent = 1;
+    private TextView mTextReClick;
     private List<UWaybill> mList=new ArrayList<>();
     private SourceAdapter adapter;
     private RelativeLayout mLayoutStart;
@@ -70,6 +72,7 @@ public class SourceFragment extends BaseFragment implements View.OnClickListener
     private RelativeLayout mLayoutLoading;
     private UDriver uDriver=null;
     private List<UCardEntity> mCardList = new ArrayList<>();
+
     @Override
     protected int getLayoutResource() {
         return R.layout.layout_source;
@@ -93,7 +96,7 @@ public class SourceFragment extends BaseFragment implements View.OnClickListener
         mTextStart=view.findViewById(R.id.tv_start);
         mTextEnd=view.findViewById(R.id.tv_end);
         mImgSearch=view.findViewById(R.id.img_search);
-
+        mTextReClick=view.findViewById(R.id.btn_reclick);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
         int color = getResources().getColor(R.color.actionbar_color);
@@ -193,6 +196,14 @@ public class SourceFragment extends BaseFragment implements View.OnClickListener
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                refreshDatas();
+            }
+        });
+        mTextReClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLayoutNoMsg.setVisibility(View.GONE);
+                isFirst=true;
                 refreshDatas();
             }
         });
@@ -342,9 +353,9 @@ public class SourceFragment extends BaseFragment implements View.OnClickListener
                         try {
                             JSONObject object=new JSONObject(msg);
                             if(object.getBoolean("success")){
-                                Toast.makeText(getActivity(), "抢单成功！", Toast.LENGTH_SHORT).show();
                                 refreshDatas();
                                 RxBus.getInstance().send(new EventEntity("wwc_refresh","wwc_refresh"));
+                                showQDView("抢单成功！请到我的运单中进行配送。");
                             }else {
                                 String error=object.getString("msg");
                                 Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
@@ -362,6 +373,28 @@ public class SourceFragment extends BaseFragment implements View.OnClickListener
                 }));
 
     }
+
+
+    private void showQDView(String msg){
+        final ExitDialogFragment exitDialogFragment=ExitDialogFragment.getInstance(msg);
+        exitDialogFragment.showF(getChildFragmentManager(),"showQDView");
+        exitDialogFragment.setOnDialogClickListener(new ExitDialogFragment.OnDialogClickListener() {
+            @Override
+            public void onClickCancel() {
+                exitDialogFragment.dismissAllowingStateLoss();
+            }
+
+            @Override
+            public void onClickOk() {
+                exitDialogFragment.dismissAllowingStateLoss();
+            }
+        });
+
+
+
+
+    }
+
 
     @Override
     protected void initData() {

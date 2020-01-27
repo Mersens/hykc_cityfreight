@@ -43,8 +43,7 @@
 
     <application
         android:allowBackup="false"
-        android:icon="@mipmap/ic_driver_new"
-        android:roundIcon="@mipmap/ic_driver_circle"
+        android:icon="@mipmap/ic_driver_round"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:name=".app.App"
@@ -380,7 +379,6 @@
             android:name=".processprotection.PlayerMusicService"
             android:exported="true"
             android:process=":music_v1" />
-
 
     </application>
 

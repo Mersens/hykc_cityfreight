@@ -5,6 +5,7 @@ import android.content.Context;
 import com.hdgq.locationlib.LocationOpenApi;
 import com.hdgq.locationlib.entity.ShippingNoteInfo;
 import com.hdgq.locationlib.listener.OnResultListener;
+import com.hykc.cityfreight.activity.MainActivity;
 import com.hykc.cityfreight.app.Constants;
 
 import java.security.PublicKey;
@@ -60,7 +61,7 @@ public class LocationOpenApiHelper {
      * @param shippingNoteInfos
      * @param listener
      */
-    public void onApiStart(Context context,
+    public void onApiStart(MainActivity context,
                            ShippingNoteInfo[] shippingNoteInfos,
                            OnAipResultListener listener){
         LocationOpenApi.start(context, shippingNoteInfos, new OnResultListener() {

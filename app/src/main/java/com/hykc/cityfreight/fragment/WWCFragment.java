@@ -18,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
+import com.hdgq.locationlib.LocationOpenApi;
 import com.hdgq.locationlib.entity.ShippingNoteInfo;
+import com.hdgq.locationlib.listener.OnResultListener;
 import com.hykc.cityfreight.R;
 import com.hykc.cityfreight.activity.GoodsListDetailActivity;
 import com.hykc.cityfreight.activity.MainActivity;
@@ -33,6 +35,7 @@ import com.hykc.cityfreight.db.DBDaoImpl;
 import com.hykc.cityfreight.entity.EventEntity;
 import com.hykc.cityfreight.entity.LocationEntity;
 import com.hykc.cityfreight.entity.UCardEntity;
+import com.hykc.cityfreight.entity.UCompany;
 import com.hykc.cityfreight.entity.UDriver;
 import com.hykc.cityfreight.entity.UWaybill;
 import com.hykc.cityfreight.service.MqttManagerV3;
@@ -801,14 +804,14 @@ public class WWCFragment extends BaseFragment {
                 Log.e("wbCoudFaceManager", "initFaceTest==onSucccess");
                 //支付
                 // 添加信息
-                addDriverSignInfo(account1, driverName1, identityNo1, uWaybill, 0, 1);
+                addDriverSignInfo(account1, driverName1, identityNo1, uWaybill, 0, 1,orderNo);
             }
 
             @Override
             public void onFail(String msg) {
                 Toast.makeText(getActivity(), "认证失败" + msg, Toast.LENGTH_SHORT).show();
                 Log.e("wbCoudFaceManager", "initFaceTest==" + msg);
-                showFaceTestView(account1, driverName1, identityNo1, uWaybill, 0);
+                showFaceTestView(account1, driverName1, identityNo1, uWaybill, 0,orderNo);
             }
         });
         wbCoudFaceManager.execute();
@@ -818,31 +821,36 @@ public class WWCFragment extends BaseFragment {
                                   final String driverName1,
                                   final String identityNo1,
                                   final UWaybill uWaybill,
-                                  final int statu) {
+                                  final int statu,
+                                  final String orderNo
+                                  ) {
 
         final FactTestDialog factTestDialog = FactTestDialog.newInstance(account1, driverName1, identityNo1);
         factTestDialog.show(getChildFragmentManager(), "showFaceTestView");
         factTestDialog.setOnCheckListener(new FactTestDialog.OnCheckListener() {
             @Override
             public void onCheck() {
-                addDriverSignInfo(account1, driverName1, identityNo1, uWaybill, 1, statu);
+                factTestDialog.dismissAllowingStateLoss();
+                addDriverSignInfo(account1, driverName1, identityNo1, uWaybill, 1, statu,orderNo);
             }
 
             @Override
             public void onDismiss() {
-                factTestDialog.dismiss();
+                factTestDialog.dismissAllowingStateLoss();
             }
         });
     }
 
     private void addDriverSignInfo(String account, String name, String identity,
-                                   final UWaybill entity, int fromStatus, final int statu) {
+                                   final UWaybill entity, int fromStatus,
+                                   final int statu,final String orderNo) {
         Map<String, String> map = new HashMap<>();
         map.put("account", account);
         map.put("name", name);
         map.put("identity", identity);
         map.put("fromStatus", fromStatus + "");
         map.put("statu", statu + "");
+        map.put("orderNo",orderNo);
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.BESTSIGN_URL_TEST).build();
         ServiceStore serviceStore = retrofit.create(ServiceStore.class);
         Call<ResponseBody> call = serviceStore.addDriverSignInfo(map);
@@ -912,6 +920,7 @@ public class WWCFragment extends BaseFragment {
                                 JSONObject object = new JSONObject(msg);
                                 if (object.getBoolean("success")) {
                                     Toast.makeText(getActivity(), "接单成功！", Toast.LENGTH_SHORT).show();
+                                    getCompanyInfo(uWaybill);
                                     submitBestSignInfo(uWaybill);
                                     refreshDatas();
                                 } else {
@@ -932,6 +941,192 @@ public class WWCFragment extends BaseFragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void getCompanyInfo(final UWaybill uWaybill){
+        long companyid=uWaybill.getCompanyId();
+        Map<String,String> map=new HashMap<>();
+        map.put("id",companyid+"");
+        RequestManager.getInstance()
+                .mServiceStore
+                .selectCompanyInfoById(map)
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ResultObserver(new RequestManager.onRequestCallBack() {
+                    @Override
+                    public void onSuccess(String msg) {
+                        Log.e("CompanyInfo", msg);
+                        try {
+                            JSONObject object = new JSONObject(msg);
+                            if (object.getBoolean("success")) {
+                                Gson gson=new Gson();
+                                String results=object.getString("entity");
+                                UCompany uCompany=gson.fromJson(results,UCompany.class);
+                                submitBestSignInfoForCompany(uWaybill,uCompany);
+                            } else {
+                                String error = object.getString("msg");
+                                Log.e("CompanyInfo", error);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String msg) {
+                        Log.e("CompanyInfo", msg);
+
+                    }
+                }));
+    }
+
+
+    private  Map<String,String> creatCompanyParams(UWaybill uWaybill,UCompany uCompany){
+        Gson gson=new Gson();
+        Log.e("UCompany params",gson.toJson(uCompany));
+        String userid = SharePreferenceUtil.getInstance(getActivity()).getUserId();
+        String userinfo = SharePreferenceUtil.getInstance(getActivity()).getUserinfo();
+        String driverName = "";
+        try {
+            JSONObject object = new JSONObject(userinfo);
+            driverName = object.getString("driverName");
+            if (TextUtils.isEmpty(driverName)) {
+                Toast.makeText(getActivity(), "姓名为空，请重新登录！", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String,String> map=new HashMap<>();
+        String account=uCompany.getLegalPhone();
+        if(!TextUtils.isEmpty(account)){
+            if(account.length()==11){
+                map.put("account",account);
+                map.put("legalPhone",account);
+            }else {
+                return null;
+            }
+
+        }
+        String corporateName=uCompany.getCorporateName();
+        if(!TextUtils.isEmpty(corporateName)){
+            map.put("corporateName",corporateName);
+        }
+        map.put("userType","2");
+        String creditId=uCompany.getCreditId();
+        if(!TextUtils.isEmpty(creditId)){
+            map.put("creditId",creditId);
+        }
+        String legalName=uCompany.getLegalName();
+        if(!TextUtils.isEmpty(legalName)){
+            if(legalName.length()<2){
+                return null;
+            }
+            map.put("legalName",legalName);
+        }
+        String legalId=uCompany.getLegalId();
+        if(!TextUtils.isEmpty(legalId)){
+            if(legalId.length()==15 || legalId.length()==18){
+                map.put("legalId",legalId);
+            }else {
+                return null;
+            }
+
+        }
+        String rowid = uWaybill.getWaybillId();
+        map.put("rowid", rowid);
+        map.put("tyf",uCompany.getCorporateName());
+        String sjcyr = driverName;
+        map.put("sjcyr", sjcyr);
+        String hwmc = uWaybill.getGoodsName();
+        map.put("hwmc", hwmc);
+        String fhr = uWaybill.getShipperName();
+        map.put("fhr", fhr);
+        String fhrdh = uWaybill.getShipperPhone();
+        map.put("fhrdh", fhrdh);
+        String qyd = uWaybill.getFromProvince() + uWaybill.getFromCity();
+        map.put("qyd", qyd);
+        String shr = uWaybill.getConsigneeName();
+        map.put("shr", shr);
+        String shrdh = uWaybill.getConsigneePhone();
+        map.put("shrdh", shrdh);
+        String mdd = uWaybill.getToProvince() + uWaybill.getToCity();
+        map.put("mdd", mdd);
+        String jsy = driverName;
+        map.put("jsy", jsy);
+        String jsydh = userid;
+        map.put("jsydh", jsydh);
+        String dw = uWaybill.getTaskUnit();
+        if (TextUtils.isEmpty(dw)) {
+            dw = "";
+        }
+        String zl = uWaybill.getUcreditId() + "/" + dw;
+        map.put("dw", zl);
+        String bzfs = dw;
+        map.put("bzfs", bzfs);
+        String cph = uWaybill.getCarNumber();
+        map.put("cph", cph);
+        String zhsj = "2小时内";
+        map.put("zhsj", zhsj);
+        String ydsj = "2天内";
+        map.put("ydsj", ydsj);
+        map.put("hz", uWaybill.getHwjz() + "");
+        double orderPrice = uWaybill.getOrderPrice();
+        double adminPrice = uWaybill.getAdminPrice();
+        double d = orderPrice - adminPrice;
+        map.put("yunfei", d + "");
+        Calendar calendar = Calendar.getInstance();
+        String jf = "河南省脱颖实业有限公司";
+        map.put("jf", jf);
+        map.put("yf",corporateName);
+        String n = calendar.get(Calendar.YEAR) + "";
+
+        map.put("n", n);
+        String y = (calendar.get(Calendar.MONTH) + 1) + "";
+
+        map.put("y", y);
+        String r = calendar.get(Calendar.DATE) + "";
+
+        map.put("r", r);
+        String hth = uWaybill.getWaybillId();
+        map.put("hth", hth);
+        String qdd = uWaybill.getFromProvince() + uWaybill.getFromCity();
+        map.put("qdd", qdd);
+        return map;
+    }
+
+    private void submitBestSignInfoForCompany(UWaybill uWaybill,UCompany uCompany){
+        Map<String,String> map=creatCompanyParams(uWaybill,uCompany);
+        if(map==null){
+            Log.e("creatCompanyParams","map is null");
+            return;
+        }
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.BESTSIGN_URL_TEST).build();
+        ServiceStore serviceStore = retrofit.create(ServiceStore.class);
+        Call<ResponseBody> call = serviceStore.autoSignAgreToCompanmy(map);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                ResponseBody body = response.body();
+                String str = null;
+                try {
+                    if (null != body) {
+                        str = body.string();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Log.e("autoSignAgreToCompanmy",
+                        "autoSignAgreToCompanmy onResponse==" + str);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("autoSignAgreToCompanmy",
+                        "autoSignAgreToCompanmy onResponse==" + t.getMessage());
+            }
+        });
     }
 
     private Map<String, String> complateParms(UWaybill uWaybill) {
@@ -1343,45 +1538,50 @@ public class WWCFragment extends BaseFragment {
         shippingNoteInfo.setSerialNumber("0101");
         shippingNoteInfo.setStartCountrySubdivisionCode(uWaybill.getFromAreaId()+"");
         shippingNoteInfo.setEndCountrySubdivisionCode(uWaybill.getToAreaId()+"");
+        Gson gson=new Gson();
+        Log.e("ShippingNoteInfo","==="+gson.toJson(shippingNoteInfo));
         return shippingNoteInfo;
     }
 
     private void openApiStart(UWaybill uWaybill){
         ShippingNoteInfo[] shippingNoteInfos=new ShippingNoteInfo[1];
         shippingNoteInfos[0]=creatShippingNoteInfo(uWaybill);
-        LocationOpenApiHelper
-                .newInstance()
-                .onApiStart(getActivity(), shippingNoteInfos, new LocationOpenApiHelper.OnAipResultListener() {
+        MainActivity activity = mActivityReference.get();
+        if (activity == null) {
+            return;
+        }
+        LocationOpenApi.start(activity, shippingNoteInfos, new OnResultListener() {
             @Override
             public void onSuccess() {
-                Log.e("onApiStart","onApiStart onSuccess");
-
+                Log.e("LocationOpenApi","onApiStart onSuccess");
             }
 
             @Override
-            public void onFailure(String errorCode, String errorMsg) {
-                Log.e("onApiStart","onApiStart onFailure="+errorCode+";"+errorMsg);
+            public void onFailure(String s, String s1) {
+                Log.e("LocationOpenApi","onApiStart onFailure="+s+";"+s1);
             }
         });
+
     }
 
     private void openApiStop(UWaybill uWaybill){
         ShippingNoteInfo[] shippingNoteInfos=new ShippingNoteInfo[1];
         shippingNoteInfos[0]=creatShippingNoteInfo(uWaybill);
-        LocationOpenApiHelper
-                .newInstance()
-                .onApiStop(getActivity(), shippingNoteInfos, new LocationOpenApiHelper.OnAipResultListener() {
-                    @Override
-                    public void onSuccess() {
-                        Log.e("onApiStop","onApiStop onSuccess");
+        MainActivity activity = mActivityReference.get();
+        if (activity == null) {
+            return;
+        }
+        LocationOpenApi.stop(activity, shippingNoteInfos, new OnResultListener() {
+            @Override
+            public void onSuccess() {
+                Log.e("LocationOpenApi","onApiSotp onSuccess");
+            }
 
-                    }
-
-                    @Override
-                    public void onFailure(String errorCode, String errorMsg) {
-                        Log.e("onApiStop","onApiStop onFailure="+errorCode+";"+errorMsg);
-                    }
-                });
+            @Override
+            public void onFailure(String s, String s1) {
+                Log.e("LocationOpenApi","onApiSotp onFailure="+s+";"+s1);
+            }
+        });
     }
 
     public void submitOrderEtcInfo(UWaybill uWaybill, int t) {

@@ -27,7 +27,7 @@ public class SelectCardTypeFragment extends DialogFragment implements View.OnCli
 
     private ImageView mImgClose;
     private Button btn;
-    private int type=1;
+    private int type=3;
 
     private onItemSelectListener listener;
 

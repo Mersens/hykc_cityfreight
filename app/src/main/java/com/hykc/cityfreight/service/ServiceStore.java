@@ -26,6 +26,10 @@ public interface ServiceStore {
     Observable<ResponseBody> getSms(@FieldMap Map<String, String> params);
 
     @FormUrlEncoded
+    @POST("app/getTxSqSms")
+    Observable<ResponseBody> getTxSqSms(@FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
     @POST("app/register")
     Observable<ResponseBody> register(@FieldMap Map<String, String> params);
 
@@ -185,6 +189,12 @@ public interface ServiceStore {
     @POST("app/evaluate_huozhu")
     Observable<ResponseBody> evaluate_huozhu(@FieldMap Map<String, String> params);
 
+
+    @FormUrlEncoded
+    @POST("company/selectCompanyInfoById")
+    Observable<ResponseBody> selectCompanyInfoById(@FieldMap Map<String, String> params);
+
+
     @FormUrlEncoded
     @POST("etc/start/")
     Call<ResponseBody> submitOrderEctInfoStart(@FieldMap Map<String, String> params);
@@ -233,6 +243,10 @@ public interface ServiceStore {
     @FormUrlEncoded
     @POST("bestsign/autoSignAgre/")
     Call<ResponseBody> autoSignAgre(@FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST("bestsign/autoSignAgreToCompanmy/")
+    Call<ResponseBody> autoSignAgreToCompanmy(@FieldMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST("bestsign/checkAgreByRowid/")

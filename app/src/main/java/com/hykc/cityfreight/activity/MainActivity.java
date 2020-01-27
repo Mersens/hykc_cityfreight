@@ -28,6 +28,8 @@ import com.allenliu.versionchecklib.v2.callback.RequestVersionListener;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationListener;
+import com.hdgq.locationlib.LocationOpenApi;
+import com.hdgq.locationlib.listener.OnResultListener;
 import com.hykc.cityfreight.R;
 import com.hykc.cityfreight.adapter.MenuPageAdapter;
 import com.hykc.cityfreight.app.AlctConstants;
@@ -102,8 +104,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
 
-
-
     public void setLocation(String lat, String lon) {
         this.lat = lat;
         this.lon = lon;
@@ -131,21 +131,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         AppInLineHelper.newInstance().init(this);
         AppInLineHelper.newInstance().appInLine(1);
 
-
     }
 
-    private void initOpenApi(Context context) {
-        LocationOpenApiHelper.newInstance().init(context, new LocationOpenApiHelper.OnAipResultListener() {
-            @Override
-            public void onSuccess() {
-                Log.e("initOpenApi", "initOpenApi onSuccess");
-            }
 
-            @Override
-            public void onFailure(String errorCode, String errorMsg) {
-                Log.e("initOpenApi", "initOpenApi onFailure=" + errorCode + ";" + errorMsg);
-            }
-        });
+    private void initOpenApi(MainActivity context) {
+        LocationOpenApi.init(context,
+                Constants.LOCATION_API_APPID,
+                Constants.LOCATION_APPSECURITY,
+                Constants.LOCATION_API_ENTERPRISESENDERCODE,
+                Constants.LOCATION_API_ENVIRONMENT,
+                new OnResultListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.e("initOpenApi", "initOpenApi onSuccess");
+                    }
+
+                    @Override
+                    public void onFailure(String s, String s1) {
+                        Log.e("initOpenApi", "initOpenApi onFailure=" + s + ";" + s1);
+                    }
+                });
+
+
     }
 
     private void initQuestion() {
@@ -204,7 +211,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                     String error = jsonObject.getString("msg");
                                     if (error.contains("token")) {
                                         confirmTokenTips("token已过期,请重新登录！");
-
                                     }
                                 }
                             } catch (JSONException e) {
@@ -788,7 +794,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_SCREEN_OFF)) {
-                Log.e("锁屏===", "锁屏======>>>>");
                 Intent pintent = new Intent(getApplicationContext(), PlayerMusicService.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     startForegroundService(pintent);

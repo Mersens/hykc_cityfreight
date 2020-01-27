@@ -140,14 +140,32 @@
         android:visibility="gone"
         >
         <TextView
+            android:id="@+id/tv_no_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textSize="@dimen/text_size_normal"
             android:textColor="@color/actionbar_color"
-            android:text="暂无数据！"
+            android:text="暂无数据"
             />
 
+        <TextView
+            android:id="@+id/btn_reclick"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="重新加载"
+            android:textSize="14sp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp"
+            android:layout_margin="10dp"
+            android:textColor="@color/actionbar_color"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/tv_no_msg"
+            android:background="@drawable/btn_no_msg_bg"
+
+            />
 
     </RelativeLayout>
     <RelativeLayout

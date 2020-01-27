@@ -74,7 +74,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@+id/service_num"
-            android:text="0371-65826280"
+            android:text="037189917589"
             android:textColor="@color/actionbar_color"
             android:textSize="@dimen/text_size_normal" />
 

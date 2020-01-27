@@ -154,7 +154,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="30dp"
-            android:background="@drawable/btn_cz_bg"
+            android:background="@drawable/btn_select_bg"
             android:text="确定"
             android:textColor="@color/base_color_text_white" />
     </LinearLayout>

@@ -12,7 +12,7 @@ public class Constants {
     public static final String MQTT_URL = "tcp://122.114.76.7:1883";//tcp://122.114.76.7:1883
     public static final String ETC_URL = "http://39.105.210.202:63688/";
     public static final String OIL_URL_TEST="http://122.114.76.7:63688/";//
-    public static final String BESTSIGN_URL_TEST="http://122.114.76.7:63688/";//http://39.105.210.202:63688
+    public static final String BESTSIGN_URL_TEST="http://122.114.76.7:63688/";//http://122.114.76.7:63688
     public static final String MQTT_PWD = "admin";
     public static final String AppId = "driver";
     public static final int TIMER_DELAY = 10000;
@@ -57,7 +57,7 @@ public class Constants {
 
     //省平台参数
     public static final String LOCATION_API_APPID="com.hykc.cityfreight";//网络货运企业APP的唯一标识
-    public static final String LOCATION_APPSECURITY="";//网络货运企业在省平台申请的接入密钥
-    public static final String LOCATION_API_ENTERPRISESENDERCODE="41100241";//网络货运企业在省平台申请的唯一标识代码
+    public static final String LOCATION_APPSECURITY="0a1b1cf928da45719d48446ec85ff5b67316e27992114a6e9bcbd466bab372e7";//网络货运企业在省平台申请的接入密钥
+    public static final String LOCATION_API_ENTERPRISESENDERCODE="41110042";//网络货运企业在省平台申请的唯一标识代码
     public static final String LOCATION_API_ENVIRONMENT="debug";//环境:“debug”接入测试环境，“release”接入正式环境。
 }

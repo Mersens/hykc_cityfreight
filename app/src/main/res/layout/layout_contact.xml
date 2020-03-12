@@ -79,10 +79,41 @@
             android:textSize="@dimen/text_size_normal" />
 
     </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:visibility="gone"
+            >
 
+            <TextView
+                android:id="@+id/yjjy_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="应急救援:"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:id="@+id/tv_yjjy_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@+id/yjjy_num"
+                android:text="13223016072"
+                android:textColor="@color/actionbar_color"
+                android:textSize="@dimen/text_size_normal" />
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/base_color_text_white"
+            android:visibility="gone"
+            />
     </LinearLayout>
-
-
-
 
 </LinearLayout>

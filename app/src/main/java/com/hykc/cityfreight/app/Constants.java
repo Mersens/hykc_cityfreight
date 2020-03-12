@@ -32,7 +32,7 @@ public class Constants {
     public static final String UPLOADE_URL = WEBSERVICE_URL + "files/image_upload_new.jsp";
     public static final int LOC_RADIUS = 3000;
     public static final String FACE_LICENSE = "ZUAShdDeu4pVwM1jswD8t2j6rGe9UFBvFq6aIV5FKb27P5lnaEwF72aQ8L6EEQKjFbZeL2uFJ6ZmleYCxxePqpHYz5DBAEx30YX88Rc62luhssIByZiQ5XpTBM3A+HTKq3aMyb+Q8fKyKir6tZtXk5i0GR6svXsNQ2dDEFD0BaJYmI5f+ZUGMhyk5r37ERrUq1Z9G75CFfhaZgmJK/mpHaSUToo95DeR+neiXBr9UVWoz9sSl2otMahWc3PeuhbpDuXWoF8ybTPjK8+lCPecm/aQF6BhA9kI0x/2d+E2LBR7L/KvVEbKRbL6xyME+ZOSMQDxwRL2OBTkweGBW9Pc/A==";
-
+    public static final String YJJY_NUM="13223016072";
     //测试
     //public static final String FACE_APPID="TIDA4BmI";
 
@@ -59,5 +59,5 @@ public class Constants {
     public static final String LOCATION_API_APPID="com.hykc.cityfreight";//网络货运企业APP的唯一标识
     public static final String LOCATION_APPSECURITY="0a1b1cf928da45719d48446ec85ff5b67316e27992114a6e9bcbd466bab372e7";//网络货运企业在省平台申请的接入密钥
     public static final String LOCATION_API_ENTERPRISESENDERCODE="41110042";//网络货运企业在省平台申请的唯一标识代码
-    public static final String LOCATION_API_ENVIRONMENT="debug";//环境:“debug”接入测试环境，“release”接入正式环境。
+    public static final String LOCATION_API_ENVIRONMENT="release";//环境:“debug”接入测试环境，“release”接入正式环境。
 }

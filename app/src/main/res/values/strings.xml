@@ -20,8 +20,9 @@
     <string name="camera">拍摄</string>
     <string name="location">位置</string>
     <string name="noti_text_expression">[Expression]</string>
-    <string name="dlyszbh">道路运输经营许可证号：郑410105005586</string>
+    <string name="dlyszbh">道路运输经营许可证号：郑410113001733</string>
     <string name="dxywjyxkz">增值电信业务经营许可证号：豫B2-20140099</string>
     <string name="djzsbh">信息系统安全等级编号：41010039013-19001</string>
     <string name="login_company_tips">本企业是交通运输业深化增值税改革典型跟踪企业，货运快车平台与《国家税务总局河南省税务局货运业务网络服务平台》已实现全线对接。</string>
+    <string name="yq_tips">众志诚成，抗击疫情；河南省脱颖实业有限公司是网络货运平台企业，现在是新型冠状病毒肺炎防控的关键时期，为了支援武汉同胞，如果您能够承担物资运输到武汉，请及时给我平台联系，全国服务电话：400-996-2611，18530802683，中国加油，武汉加油！</string>
 </resources>

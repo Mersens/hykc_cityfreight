@@ -1667,10 +1667,11 @@ public class WWCFragment extends BaseFragment {
                                 if (object.getBoolean("success")) {
                                     openApiStop(uWaybill);
                                     Toast.makeText(getActivity(), "送达成功！", Toast.LENGTH_SHORT).show();
-/*                                    if (bind != null) {
+                                     /*  if (bind != null) {
                                         bind.stopLocationService();
                                         upLoadLocation(uWaybill.getWaybillId());
                                     }*/
+                                    addDriverOftenLine(uWaybill,userid);
                                     alctManager.alctUnLoad(uWaybill);
                                     refreshDatas();
                                 } else {
@@ -1692,6 +1693,40 @@ public class WWCFragment extends BaseFragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void addDriverOftenLine(UWaybill uWaybill, String userid) {
+        Map<String, String> map = new HashMap<>();
+        if(TextUtils.isEmpty(userid)){
+            return;
+        }
+        map.put("mobile",userid);
+        map.put("fromProvince",uWaybill.getFromProvince());
+        map.put("fromCity",uWaybill.getFromCity());
+        map.put("fromArea",uWaybill.getFromArea());
+        map.put("toProvince",uWaybill.getToProvince());
+        map.put("toCity",uWaybill.getToCity());
+        map.put("toArea",uWaybill.getToArea());
+        map.put("isStopUsing","0");
+
+        RequestManager.getInstance()
+                .mServiceStore
+                .addDriverOftenLine(map)
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ResultObserver(new RequestManager.onRequestCallBack() {
+                    @Override
+                    public void onSuccess(String msg) {
+                        Log.e("addDriverOftenLine", msg);
+
+                    }
+
+                    @Override
+                    public void onError(String msg) {
+                        Log.e("addDriverOftenLine", msg);
+                    }
+                }));
+
     }
 
     private void upLoadLocation(final String id) {

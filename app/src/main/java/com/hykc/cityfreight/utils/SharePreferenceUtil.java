@@ -21,6 +21,7 @@ public class SharePreferenceUtil {
     private static final String ALCT_MSG = "alct_msg";
     private static final String SD_MSG = "sd_msg";
     private static final String USERINFO = "userinfo";
+    private static final String ACCEPT_AGRE="accept_agre";
     public static Boolean getIsFirst() {
         return mSharedPreferences.getBoolean(IS_FIRST, true);
     }
@@ -94,6 +95,14 @@ public class SharePreferenceUtil {
 
     public void setUserinfo(String info) {
         editor.putString(USERINFO, info);
+        editor.commit();
+    }
+
+    public boolean getAcceptAgre(){
+        return mSharedPreferences.getBoolean(ACCEPT_AGRE, false);
+    }
+    public void setAcceptAgre(boolean acceptAgre) {
+        editor.putBoolean(ACCEPT_AGRE, acceptAgre);
         editor.commit();
     }
 }

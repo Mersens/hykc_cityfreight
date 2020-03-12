@@ -26,6 +26,7 @@ import com.hykc.cityfreight.utils.RequestManager;
 import com.hykc.cityfreight.utils.ResultObserver;
 import com.hykc.cityfreight.utils.SharePreferenceUtil;
 import com.hykc.cityfreight.utils.SystemUtil;
+import com.hykc.cityfreight.view.AcceptAgreDialog;
 import com.hykc.cityfreight.view.LoadingDialogFragment;
 import com.google.gson.Gson;
 
@@ -47,22 +48,43 @@ public class CodeLoginFragment extends BaseFragment {
     private String chkCode = null;
     private RelativeLayout mLayoutXY;
     private CheckBox checkBox;
+    private boolean isPrepared;
 
 
     @Override
     protected int getLayoutResource() {
         return R.layout.layout_code_login;
     }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isPrepared &&isVisibleToUser) {
+            boolean isAccept=SharePreferenceUtil.getInstance(getActivity()).getAcceptAgre();
+            if(isAccept){
+                checkBox.setChecked(true);
+            }else {
+                checkBox.setChecked(false);
+            }
+
+        }
+    }
 
     @Override
     protected void initView(View view) {
+        isPrepared = true;
+
         mEditTel=view.findViewById(R.id.editPhone);
         mEditCode=view.findViewById(R.id.edCode);
         mTextGetCode=view.findViewById(R.id.tv_getCode);
         mBtnLogin=view.findViewById(R.id.btnlogin);
         mLayoutXY=view.findViewById(R.id.layout_xy);
         checkBox=view.findViewById(R.id.checkBox);
-
+        boolean isAccept=SharePreferenceUtil.getInstance(getActivity()).getAcceptAgre();
+        if(isAccept){
+            checkBox.setChecked(true);
+        }else {
+            checkBox.setChecked(false);
+        }
         RegisterCodeTimerService.setHandler(mCodeHandler);
         initEvent();
     }
@@ -90,9 +112,33 @@ public class CodeLoginFragment extends BaseFragment {
     }
 
     private void doCheckXY() {
-        Intent intentFind = new Intent(getActivity(), AgreementActivity.class);
+        /*Intent intentFind = new Intent(getActivity(), AgreementActivity.class);
         startActivity(intentFind);
         getActivity().overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+*/
+
+        showAcceptAgreView();
+
+    }
+
+    private void showAcceptAgreView() {
+        final AcceptAgreDialog acceptAgreDialog = AcceptAgreDialog.newInstance();
+        acceptAgreDialog.showF(getChildFragmentManager(), "AccountAgre");
+        acceptAgreDialog.setOnSelectListener(new AcceptAgreDialog.OnSelectListener() {
+            @Override
+            public void onSelect() {
+                acceptAgreDialog.dismissAllowingStateLoss();
+                SharePreferenceUtil.getInstance(getActivity()).setAcceptAgre(true);
+                checkBox.setChecked(true);
+            }
+
+            @Override
+            public void onCancel() {
+                acceptAgreDialog.dismissAllowingStateLoss();
+                SharePreferenceUtil.getInstance(getActivity()).setAcceptAgre(false);
+                checkBox.setChecked(false);
+            }
+        });
 
     }
 

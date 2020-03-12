@@ -135,7 +135,8 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/login_checkbox_selector"
                 android:button="@null"
-                android:checked="true" />
+                android:clickable="false"
+                android:checked="false" />
 
             <TextView
                 android:id="@+id/tv_xy"

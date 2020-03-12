@@ -23,7 +23,65 @@
             android:textColor="@color/base_color_text_white"
             android:text="运单"
             />
+        <TextView
+            android:id="@+id/tv_right_title"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="14sp"
+            android:textColor="@color/base_color_text_white"
+            android:text="应急救援"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            />
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/layout_tips"
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:background="@color/color_line_text"
+        >
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/img_tz_blue"
+            android:id="@+id/img_tz"
+            />
+
+        <TextView
+            android:id="@+id/tv_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/yq_tips"
+            android:textColor="@color/actionbar_color"
+            android:layout_toRightOf="@+id/img_tz"
+            android:layout_marginLeft="5dp"
+            android:textSize="10sp"
+            android:layout_marginRight="32dp"
+            />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/img_close_tips"
+            android:id="@+id/img_close_tips"
+            android:layout_marginRight="10dp"
+            />
+
+    </RelativeLayout>
+
     <com.hykc.cityfreight.view.NoScrollViewPager
         android:id="@+id/viewpager"
         android:layout_height="0dp"

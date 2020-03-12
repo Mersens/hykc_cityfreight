@@ -15,6 +15,7 @@ import com.hykc.cityfreight.activity.ChatActivity;
 import com.hykc.cityfreight.activity.CheckRzTextActivity;
 import com.hykc.cityfreight.activity.ContactActivity;
 import com.hykc.cityfreight.activity.LoginActivity;
+import com.hykc.cityfreight.activity.MainActivity;
 import com.hykc.cityfreight.activity.MyCarInfoActivity;
 import com.hykc.cityfreight.activity.MyCardActivity;
 import com.hykc.cityfreight.activity.MySuggListActivity;
@@ -327,6 +328,7 @@ public class MyInfoFragment extends BaseFragment implements View.OnClickListener
                 SharePreferenceUtil.getInstance(getActivity()).setUserId("");
                 SharePreferenceUtil.getInstance(getActivity()).setUserinfo("");
 
+
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
@@ -334,7 +336,6 @@ public class MyInfoFragment extends BaseFragment implements View.OnClickListener
 
             }
         });
-
     }
 
     @Override
@@ -464,10 +465,8 @@ public class MyInfoFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onProgress(int progress, String status) {
 
-
             }
         });
-
 
     }
 

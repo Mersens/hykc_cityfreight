@@ -6,7 +6,7 @@ android {
         applicationId "com.hykc.cityfreight"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 7
+        versionCode 8
         multiDexEnabled true
         multiDexKeepProguard file("tinkerMultidexKeep.pro")
         versionName "1.1"

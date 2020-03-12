@@ -500,9 +500,6 @@ public class TXInputMoneyActivity extends BaseActivity {
         return map;
     }
 
-
-
-
     private void submitBestSignInfo(UWaybill uWaybill,final String strMoney, final String psd,
                                     final String account,final String type,final String name) {
         final LoadingDialogFragment dialogFragment=LoadingDialogFragment.getInstance();

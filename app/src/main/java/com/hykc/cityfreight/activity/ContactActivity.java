@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +21,10 @@ import com.hykc.cityfreight.view.ExitDialogFragment;
 
 public class ContactActivity extends BaseActivity {
     private TextView mTextNum;
+    private TextView mTextJYNum;
     private ImageView mImgBack;
+    private String nums[]=new String[]{"037189917589","13223016072"};
+    private int index=0;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,24 +36,21 @@ public class ContactActivity extends BaseActivity {
     @Override
     public void init() {
         mTextNum=findViewById(R.id.tv_service_num);
+        mTextJYNum=findViewById(R.id.tv_yjjy_num);
         mImgBack=findViewById(R.id.img_back);
         mTextNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (ContextCompat.checkSelfPermission(ContactActivity.this,
-                            Manifest.permission.CALL_PHONE)
-                            != PackageManager.PERMISSION_GRANTED) {
+                index=0;
+                checkPermiss();
 
-                        ActivityCompat.requestPermissions(ContactActivity.this,
-                                new String[]{Manifest.permission.CALL_PHONE},
-                                MY_PERMISSIONS_REQUEST_CALL_PHONE);
-                    } else {
-                        callPhone();
-                    }
-                }else {
-                    callPhone();
-                }
+            }
+        });
+        mTextJYNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                index=1;
+                checkPermiss();
             }
         });
         mImgBack.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +62,24 @@ public class ContactActivity extends BaseActivity {
         });
 
     }
+
+    private void checkPermiss(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(ContactActivity.this,
+                    Manifest.permission.CALL_PHONE)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(ContactActivity.this,
+                        new String[]{Manifest.permission.CALL_PHONE},
+                        MY_PERMISSIONS_REQUEST_CALL_PHONE);
+            } else {
+                callPhone();
+            }
+        }else {
+            callPhone();
+        }
+    }
+
 
     private void callPhone() {
         confirmUserPhone("确定拨打电话？");
@@ -96,7 +115,17 @@ public class ContactActivity extends BaseActivity {
             @SuppressLint("MissingPermission")
             @Override
             public void onClickOk() {
-                final String num=mTextNum.getText().toString();
+                String num=null;
+                if (index==0){
+                    num=nums[0];
+                }else if(index==1){
+                    num=nums[1];
+                }
+                if(TextUtils.isEmpty(num)){
+                    Toast.makeText(ContactActivity.this, "电话号码为空！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 Uri data = Uri.parse("tel:" + num);
                 intent.setData(data);

@@ -212,6 +212,10 @@ public interface ServiceStore {
     Call<ResponseBody> selectUDriverIsFaceTest(@FieldMap Map<String, String> params);
 
     @FormUrlEncoded
+    @POST("app/addDriverOftenLine/")
+    Observable<ResponseBody> addDriverOftenLine(@FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
     @POST("bestsign/idcardFaceVerify/")
     Call<ResponseBody> idcardFaceVerify(@FieldMap Map<String, String> params);
 
